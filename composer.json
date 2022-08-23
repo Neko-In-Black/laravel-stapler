@@ -1,0 +1,44 @@
+{
+  "name": "neko.in.black/laravel-stapler",
+  "description": "Easy file upload management for the Laravel Framework.",
+  "keywords": [
+    "laravel",
+    "file",
+    "upload",
+    "S3",
+    "AWS",
+    "stapler",
+    "paperclip"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Travis Bennett",
+      "email": "tandrewbennett@hotmail.com"
+    },
+    {
+      "name": "Andrew Black",
+      "email": "neko.in.black@gmail.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:Neko-In-Black/stapler.git"
+    }
+  ],
+  "require": {
+    "php": ">=8.1.0",
+    "neko.in.black/stapler": ">=1.0.0",
+    "laravel/framework": "9.*.*"
+  },
+  "autoload": {
+    "classmap": [
+      "src/migrations"
+    ],
+    "psr-4": {
+      "Neko\\LaravelStapler\\": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}
