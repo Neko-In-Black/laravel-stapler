@@ -40,5 +40,5 @@
       "Neko\\LaravelStapler\\": "src/"
     }
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "stable"
 }
