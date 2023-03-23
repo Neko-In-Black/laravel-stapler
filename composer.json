@@ -29,7 +29,7 @@
   ],
   "require": {
     "php": ">=8.1.0",
-    "neko.in.black/stapler": ">=1.0.0",
+    "neko.in.black/stapler": ">=1.0.5",
     "laravel/framework": ">=9.0"
   },
   "autoload": {
@@ -39,6 +39,5 @@
     "psr-4": {
       "Neko\\LaravelStapler\\": "src/"
     }
-  },
-  "minimum-stability": "stable"
+  }
 }
