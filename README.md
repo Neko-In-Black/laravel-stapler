@@ -1,8 +1,4 @@
-laravel-stapler
-===============
-[![Latest Stable Version](https://poser.pugx.org/codesleeve/laravel-stapler/v/stable.svg)](https://packagist.org/packages/codesleeve/laravel-stapler)[![Total Downloads](https://poser.pugx.org/codesleeve/laravel-stapler/downloads.svg)](https://packagist.org/packages/codesleeve/laravel-stapler)
-[![Latest Unstable Version](https://poser.pugx.org/codesleeve/laravel-stapler/v/unstable.svg)](https://packagist.org/packages/codesleeve/laravel-stapler)
-[![License](https://poser.pugx.org/codesleeve/laravel-stapler/license.svg)](https://packagist.org/packages/codesleeve/laravel-stapler)
+# Laravel-stapler
 
 Laravel-Stapler is a Stapler-based file upload package for the Laravel framework.  It provides a full set of Laravel commands, a migration generator, and a cascading package config on top of the [Stapler](https://github.com/CodeSleeve/stapler) package.  It also bootstraps Stapler with very sensible defaults for use with Laravel.  If you are wanting to use [Stapler](https://github.com/CodeSleeve/stapler) with Laravel, it is strongly recommended that you use this package to do so.
 
@@ -20,9 +16,7 @@ Laravel-Stapler was created by [Travis Bennett](https://twitter.com/tandrewbenne
 * [Contributing](#contributing)
 
 ## Requirements
-This package currently requires php >= 5.4 as well as Laravel >= 4, up to 5.4 (**5.4 is the last version of Laravel this package will officially support**).
-*Due to the recent inconsistencies/changes introduced into Eloquent and the fact that Laravel now ships with Disks/Flysystem support, I have decided not to try and maintain this package for future version of Laravel.
-I am not adding a hard requirement for Laravel <= 5.4 due to the fact that some folks are already using it in their Laravel > 5.4 projects. If you want use this package in new version of Laravel you may do so at your own risk.*
+This package currently requires php >= 8 as well as Laravel >= 10.
 
 If you're going to be performing image processing as part of your file upload, you'll also need GD, Gmagick, or Imagick (your preference) installed as part of your php environment.
 
@@ -40,35 +34,10 @@ Install the package using Composer.  Edit your project's `composer.json` file to
 
 Once this operation completes, the final step is to add the service provider.
 
-For Laravel 4, Open `app/config/app.php`, and add a new item to the providers array:
-```php
-    'Neko\LaravelStapler\Providers\L4ServiceProvider'
-```
-
-For Laravel 5, Open `config/app.php`, and add a new item to the providers array:
+For Laravel 10, Open `config/app.php`, and add a new item to the providers array:
 ```php
     'Neko\LaravelStapler\Providers\L5ServiceProvider'
 ```
-
-## Deprecations
-As of 1.0.04, the 'Neko\LaravelStapler\LaravelStaplerServiceProvider' service provider has been deprecated
-(this provider will be removed in the next major release).  Instead, you should now be using the corresponding service provider for the specific version
-of Laravel that you're using.
-
-## migrating-from-Stapler-v1.0.0-Beta4
-If you've been using Stapler (prior to v1.0.0-Beta4) in your Laravel app, you now need to be using this package instead.  Uninstall Stapler (remove it from your composer.json, remove the service provider, etc) and install this package following the instructions above.  Once installed, the following changes may need need to be made in your application:
-
-* In your models that are using Stapler, change `use Neko\Stapler\Stapler` to `use Neko\Stapler\ORM\EloquentTrait`.  Your models will also need to implement `Neko\Stapler\ORM\StaplerableInterface`.
-
-* If you published stapler's config, you'll need to rename config folder from `app/config/packages/codesleeve/stapler` to `app/config/packages/codesleeve/laravel-stapler`.
-
-* Image processing libraries are now referenced by their full class name from the [Imagine Image](https://github.com/avalanche123/Imagine) package (e.g `gd` is now reference by `Imagine\Gd\Imagine`).
-
-* In your s3 configuration, instead of passing 'key', 'secret', 'region', and 'scheme' options, you'll now need to pass a single 's3_client_config' array containing these options (and any others you might want).  These will be passed directly to the s3ClientFactory when creating an S3 client.  Passing the params as an array now allows you to configure your s3 client (for a given model/attachment) however you like.  See:  http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
-
-* In your s3 configuration, instead of passing 'Bucket' and 'ACL', you'll now need to pass a single 's3_object_config' array containing these values (this is used by the S3Client::putObject() method).  See:  http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.S3.S3Client.html#_putObject
-
-* The ':laravel_root' interpolation has been changed to ':app_root'
 
 ## Quickstart
 In the document root of your application (most likely the public folder), create a folder named system and
@@ -141,7 +110,7 @@ $user->avatar = STAPLER_NULL;
 $user->save();
 ```
 
-This will ensure the the corresponding attachment fields in the database table record are cleared and the current file is removed from storage.  The database table record itself will not be destroyed and can be used normally (or even assigned a new file upload) as needed.
+This will ensure the corresponding attachment fields in the database table record are cleared and the current file is removed from storage.  The database table record itself will not be destroyed and can be used normally (or even assigned a new file upload) as needed.
 
 ## Commands
 ### fasten
@@ -156,7 +125,6 @@ In the quickstart example above, calling
 *   (string) avatar_content_type
 *   (timestamp) avatar_updated_at
 
-
 ### refresh
 The `refresh` command can be used to reprocess uploaded images on a model's attachments.  It works by calling the reprocess() method on each of the model's attachments (or on specific attachments only).  This is very useful for adding new styles to an existing attachment when a file has already been uploaded for that attachment.
 
@@ -168,12 +136,3 @@ Reprocess only the photo attachment on the ProfilePicture model:
 
 Reprocess a list of attachments on the ProfilePicture model:
 `php artisan stapler:refresh TestPhoto --attachments="foo, bar, baz, etc"`
-
-## Troubleshooting
-Before you submit an issue or create a pull request, please take a look at the [Troubleshooting Section](https://github.com/CodeSleeve/stapler/blob/master/docs/troubleshooting.md) section of the Stapler package.
-There's a very good chance that many (if not all) of the issues you're having with this package are related to the base stapler package and have already been addressed there.
-
-## Contributing
-This package is always open to contributions:
-
-* Master will always contain the newest work (bug fixes, new features, etc), however it may not always be stable; use at your own risk.  Every new tagged release will come from the work done on master, once things have stablized, etc.

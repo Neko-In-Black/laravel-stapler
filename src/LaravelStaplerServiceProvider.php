@@ -112,7 +112,7 @@ class LaravelStaplerServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the the migrations folder path with the container.
+     * Register the migrations folder path with the container.
      */
     protected function registerMigrationFolderPath()
     {

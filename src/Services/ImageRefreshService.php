@@ -56,7 +56,7 @@ class ImageRefreshService
     }
 
     /**
-     * Process a only a specified subset of stapler attachments.
+     * Process only a specified subset of stapler attachments.
      *
      * @param Collection $models
      * @param array      $attachments
